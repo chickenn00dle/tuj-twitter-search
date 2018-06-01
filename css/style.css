@@ -1,0 +1,46 @@
+.tweet-category {
+  margin-bottom: 30px !important;
+}
+
+.tweet-author {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.tweet-author-img {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.tweet-profile-img {
+  border-radius: 50%;
+  width: 40px;
+  vertical-align: baseline;
+}
+
+.tweet-author-details {
+  display: inline-block;
+}
+
+.tweet-profile-name {
+  color: #292F33 !important;
+}
+
+.tweet-profile-screen a {
+  color: #bcbbb6 !important;
+  text-decoration: none;
+}
+
+.tweet-profile-screen a:hover {
+  text-decoration: none !important;
+}
+
+.tweet-text {
+  font-size: 100% !important;
+  color: #292F33 !important;
+}
+
+.tweet-divider {
+  margin: 10px 0 20px;
+  border-top: 1px solid #eceae4;
+}

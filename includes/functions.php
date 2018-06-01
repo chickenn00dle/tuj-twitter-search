@@ -1,28 +1,31 @@
 <?php
+// Main query function. creates query array with q, count, result_type, tweet_mode and include_entities params and adds oauth header for validation
 function queryTwitter($search) 
 {
     $url = "https://api.twitter.com/1.1/search/tweets.json";
-    if($search != "")
-        $search = "#" . $search;
+    $search = $search != "" ? "#" . $search : "";
     $query = array( 
         'count' => 5, 
-        'q' => urlencode($search), 
+        'q' => 'from:tujweb ' . urlencode($search), 
         'result_type' => 'recent', 
         'tweet_mode' => 'extended',
         'include_entities' => true,
     );
+
+    // CHANGE THESE TO MATCH TWITTER APP
     $oauth_access_token = "485795036-Q3YBm4T85WqZBdu3owuLykwhVR8XyDFpBnNdjaEe";
     $oauth_access_token_secret = "rFoBtTTLhdLzOMLdH2sYTJ8sYNLh9LCXk8QYaBbuxXpVP";
     $consumer_key = "ABMyjNjo0cCA67sXYYDYYp6Zt";
     $consumer_secret = "f3pmTcbbC8zmn37J02SBv41tlqf7QFCuNs4lcYSQ0U8vjKo7Vq";
 
     $oauth = array(
-                    'oauth_consumer_key' => $consumer_key,
-                    'oauth_nonce' => time(),
-                    'oauth_signature_method' => 'HMAC-SHA1',
-                    'oauth_token' => $oauth_access_token,
-                    'oauth_timestamp' => time(),
-                    'oauth_version' => '1.0');
+        'oauth_consumer_key' => $consumer_key,
+        'oauth_nonce' => time(),
+        'oauth_signature_method' => 'HMAC-SHA1',
+        'oauth_token' => $oauth_access_token,
+        'oauth_timestamp' => time(),
+        'oauth_version' => '1.0'
+    );
 
     $base_params = empty($query) ? $oauth : array_merge($query, $oauth);
     $base_info = buildBaseString($url, 'GET', $base_params);
@@ -46,6 +49,7 @@ function queryTwitter($search)
     return  json_decode($json);
 }
 
+// construct url from base url and params array. used by queryTwitter
 function buildBaseString($baseURI, $method, $params)
 {
     $r = array(); 
@@ -53,9 +57,10 @@ function buildBaseString($baseURI, $method, $params)
     foreach($params as $key=>$value){
         $r[] = "$key=" . rawurlencode($value); 
     }
-    return $method."&" . rawurlencode($baseURI) . '&' . rawurlencode(implode('&', $r)); 
+    return $method. "&" . rawurlencode($baseURI) . '&' . rawurlencode(implode('&', $r)); 
 }
 
+// construct oauth heading from oath array. used by queryTwitter
 function buildAuthorizationHeader($oauth)
 {
     $r = 'Authorization: OAuth '; 
