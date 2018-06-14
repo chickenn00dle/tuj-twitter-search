@@ -67,14 +67,16 @@ class tuj_Twitter_Search_Widget extends WP_Widget {
         $text = $status->full_text;
         $text = preg_replace( '/https:\/\/.*/i', '', $text);
         $url = isset($status->entities->urls[0]) ? $status->entities->urls[0]->url : false;
-        echo '<p class="tweet-text bm-20px">' . $text . '<a href="' . $url . '" target="_blank">' . $url . '</a> <a href="https://twitter.com/search?q=from%3Atujweb+%23' . $hashtag . '&src=typd" target="_blank">#' . $hashtag . '</a></p>
-        
-          <hr class="tweet-divider">';
+        echo '<p class="tweet-text bm-20px">
+              ' . $text . '<a href="' . $url . '" target="_blank">' . $url . '</a> <a href="https://twitter.com/search?q=from%3Atujweb+%23' . $hashtag . '&src=typd" target="_blank">#' . $hashtag . '</a>
+              </p>
+              <hr class="tweet-divider">';
       }
     } else {
-      echo '<p class="tweet-text bm-20px">See all of our <a href="https://twitter.com/search?q=from%3Atujweb+%23' . $hashtag . '" target="_blank">#' . $hashtag .  '</a> tweets on our official <a href="https://twitter.com/tujweb" target="_blank">@TUJWeb</a> Twitter account.</p>
-        
-        <hr class="tweet-divider">';
+      echo '<p class="tweet-text bm-20px">
+              See all of our <a href="https://twitter.com/search?q=from%3Atujweb+%23' . $hashtag . '" target="_blank">#' . $hashtag .  '</a> tweets on our official <a href="https://twitter.com/tujweb" target="_blank">@TUJWeb</a> Twitter account.
+            </p>
+            <hr class="tweet-divider">';
     }
 
     echo '</div>
