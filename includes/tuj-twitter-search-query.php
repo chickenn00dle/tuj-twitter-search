@@ -12,11 +12,11 @@ function queryTwitter($search)
         'include_entities' => true,
     );
 
-    // CHANGE THESE TO MATCH TWITTER APP
-    $oauth_access_token = "485795036-Q3YBm4T85WqZBdu3owuLykwhVR8XyDFpBnNdjaEe";
-    $oauth_access_token_secret = "rFoBtTTLhdLzOMLdH2sYTJ8sYNLh9LCXk8QYaBbuxXpVP";
-    $consumer_key = "ABMyjNjo0cCA67sXYYDYYp6Zt";
-    $consumer_secret = "f3pmTcbbC8zmn37J02SBv41tlqf7QFCuNs4lcYSQ0U8vjKo7Vq";
+    $options = get_option('tujts_options');
+    $oauth_access_token = $options['tujts_field_oath_token'];
+    $oauth_access_token_secret = $options['tujts_field_oath_secret'];
+    $consumer_key = $options['tujts_field_consumer_key'];
+    $consumer_secret = $options['tujts_field_consumer_secret'];
 
     $oauth = array(
         'oauth_consumer_key' => $consumer_key,

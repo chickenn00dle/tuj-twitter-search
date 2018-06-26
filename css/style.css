@@ -1,10 +1,16 @@
+/* tuj-twitter-search styles */
+
 .tweet-category {
   margin-bottom: 30px !important;
 }
 
+.tweet-title {
+  margin-bottom: 10px !important;
+}
+
 .tweet-author {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .tweet-author-img {
@@ -35,12 +41,59 @@
   text-decoration: none !important;
 }
 
+.tweet-result {
+  background: white;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  border: 1px solid #f7f7f7;
+  
+}
+
+.tweet-media-date {
+  margin-bottom: 0 !important;
+}
+
 .tweet-text {
   font-size: 100% !important;
   color: #292F33 !important;
+  margin-bottom: 0 !important;
 }
 
 .tweet-divider {
   margin: 10px 0 20px;
   border-top: 1px solid #eceae4;
 }
+
+/*
+FYI for styling
+Tweet HTML structure
+<div class="tweet-category">
+  <h3 class="h-md-light tweet-title">Title</h3>
+  <figure class="bm-20px">
+    <a href="url" target="_blank">
+      <img src="image.png" alt="image alt">
+    </a>
+  </figure>
+  <div class="tweet-author">
+    <div class="tweet-author-img">
+      <a href="url" target="_blank">
+        <img class="tweet-profile-img" src="image.jpg">
+      </a>
+    </div>
+    <div class="tweet-author-details">
+      <p class="tweet-profile-name bm-none">Profile name</p>
+      <p class="tweet-profile-screen bm-none"><a href="url" target="_blank">@profile</a></p>
+    </div>
+  </div>
+  <hr class="tweet-divider">
+  <div class="tweet-result">
+      <h4 class="tweet-title">Media / Date</h4>
+      <p class="tweet-text">
+        Tweet text <a href="url" target="_blank">url</a> <a href="url" target="_blank">#Hashtag</a> <a href="url" target="_blank">#TUJintheMedia</a>
+      </p>
+    </div><ul class="link-medium">
+    <li><i class="li-spr"></i><a href="url" target="_blank">View more</a></li>
+  </ul>
+</div>
+*/

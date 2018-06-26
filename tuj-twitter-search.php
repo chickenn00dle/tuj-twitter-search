@@ -9,7 +9,8 @@
  * Author URI:    https://twitter.com/ChickenN00dle
  */
 
-require_once('includes/functions.php');
+require_once('includes/tuj-twitter-search-admin.php');
+require_once('includes/tuj-twitter-search-query.php');
 
 
 class tuj_Twitter_Search_Widget extends WP_Widget {
@@ -32,15 +33,14 @@ class tuj_Twitter_Search_Widget extends WP_Widget {
 
     echo $args['before_widget'];
 
-    echo '<h3 class="' . $instance['title-class'] . '">' . $title . '</h3>';
+    echo '<div class="tweet-category">
+            <h3 class="tweet-title ' . $instance['title-class'] . '">' . $title . '</h3>';
     if ($banner) {
-      echo '<div class="tweet-category">
-              <figure class="bm-20px">
-                <a href="https://twitter.com/search?q=%23' . $hashtag . '&src=typd" target="_blank">
-                  <img src="' . $banner . '" alt="#' . $hashtag  . ' Tweets" />
-                </a>
-              </figure>
-              <div class="tweet-result">';
+      echo '<figure class="bm-20px">
+              <a href="https://twitter.com/search?q=%23' . $hashtag . '&src=typd" target="_blank">
+                <img src="' . $banner . '" alt="#' . $hashtag  . ' Tweets" />
+              </a>
+            </figure>';
     }
 
     if (isset($data->statuses[0])) {
@@ -60,27 +60,37 @@ class tuj_Twitter_Search_Widget extends WP_Widget {
                 <p class="tweet-profile-name bm-none">' . $profileName  . '</p>
                 <p class="tweet-profile-screen bm-none"><a href="https://twitter.com/tujweb" target="_blank">@' . $profileScreen  . '</a></p>
               </div>
-            </div>
-            <hr class="tweet-divider">';
+            </div>';
       foreach ($data->statuses as $status) {
         $date = date('F j, Y', strtotime($status->created_at));
-        $text = $status->full_text;
-        $text = preg_replace( '/https:\/\/.*/i', '', $text);
+        $fullText = $status->full_text;
+        preg_match('/\((.*)\)/m', $fullText, $mediaDate);
+        preg_match( '/^(.*)\(.*$/m', $fullText, $text);
         $url = isset($status->entities->urls[0]) ? $status->entities->urls[0]->url : false;
-        echo '<p class="tweet-text bm-20px">
-              ' . $text . '<a href="' . $url . '" target="_blank">' . $url . '</a> <a href="https://twitter.com/search?q=from%3Atujweb+%23' . $hashtag . '&src=typd" target="_blank">#' . $hashtag . '</a>
-              </p>
-              <hr class="tweet-divider">';
+
+        echo '<div class="tweet-result">
+                <p class="tweet-media-date"><strong>' . $mediaDate[1] . '</strong></p>
+                <p class="tweet-text">
+                ' . $text[1];
+        if ($url) {
+          echo ' <a href="' . $url . '" target="_blank">' . $url . '</a>';
+        }
+        echo ' <a href="https://twitter.com/search?q=from%3Atujweb+%23' . $hashtag . '&src=typd" target="_blank">#' . $hashtag . '</a> <a href="https://twitter.com/search?q=from%3Atujweb+%23tujinthemedia&src=typd" target="_blank">#TUJintheMedia</a>
+                </p>
+              </div>';
       }
+      echo '<ul class="link-medium">
+              <li><i class="li-spr"></i><a href="https://twitter.com/search?q=from%3Atujweb+%23' . $hashtag  . '" target="_blank">View more</a></li>
+            </ul>';
     } else {
-      echo '<p class="tweet-text bm-20px">
-              See all of our <a href="https://twitter.com/search?q=from%3Atujweb+%23' . $hashtag . '" target="_blank">#' . $hashtag .  '</a> tweets on our official <a href="https://twitter.com/tujweb" target="_blank">@TUJWeb</a> Twitter account.
-            </p>
-            <hr class="tweet-divider">';
+      echo '<div class="tweet-result">
+              <p class="tweet-text">
+                See all of our <a href="https://twitter.com/search?q=from%3Atujweb+%23' . $hashtag . '" target="_blank">#' . $hashtag .  '</a> tweets on our official <a href="https://twitter.com/tujweb" target="_blank">@TUJWeb</a> Twitter account.
+              </p>
+            </div>';
     }
 
-    echo '</div>
-      </div>';
+    echo  '</div>';
     
     echo $args['after_widget'];
   }
