@@ -79,7 +79,11 @@
     name="tujts_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
     />
     <p class="description">
-    <?php esc_html_e( 'Enter your Twitter ' . $args['name'], 'tujts' ); ?>
+      <?php 
+        isset($options[ $args['label_for'] ]) ? 
+          _e($args['name'] . ' is set. To update, re-enter key.') :
+          esc_html_e( 'Enter your Twitter ' . $args['name'], 'tujts' ); 
+      ?>
     </p>
     <?php
   }
