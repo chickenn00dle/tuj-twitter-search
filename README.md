@@ -17,9 +17,11 @@ The widget plugin uses the standard [Twitter Search API](https://developer.twitt
 $ git clone https://github.com/TUJapan/tujinthemedia-plugin.git
 ```
 2. From the wp-admin screen, activate the `TUJ Twitter Search Widget`
-3. The `Twitter Search Widget` should now be an optional widget
+3. The `TUJTS` admin menu and `Twitter Search Widget` should now be available
 
 ## Usage
+
+Before adding a Twitter Search widget, be sure to add your Twitter OAuth and Consumer Keys/Tokens to the TUJTS Admin menu!
 
 The current version of the widget has four input options:
 
