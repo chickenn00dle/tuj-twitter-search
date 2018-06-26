@@ -2,8 +2,11 @@
 // Main query function. creates query array with q, count, result_type, tweet_mode and include_entities params and adds oauth header for validation
 function queryTwitter($search) 
 {
+    $options = get_option('tujts_options');
     $url = "https://api.twitter.com/1.1/search/tweets.json";
     $search = $search != "" ? "#" . $search : "";
+
+    // TODO: Add count and twitter user to options page and remove static values from query object.
     $query = array( 
         'count' => 5, 
         'q' => 'from:tujweb ' . urlencode($search), 
@@ -12,7 +15,6 @@ function queryTwitter($search)
         'include_entities' => true,
     );
 
-    $options = get_option('tujts_options');
     $oauth_access_token = $options['tujts_field_oath_token'];
     $oauth_access_token_secret = $options['tujts_field_oath_secret'];
     $consumer_key = $options['tujts_field_consumer_key'];
