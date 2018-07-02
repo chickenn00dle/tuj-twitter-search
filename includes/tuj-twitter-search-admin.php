@@ -1,14 +1,57 @@
 <?php
-
+  defined( 'ABSPATH' ) or die( 'Forbidden Script' );
   function tuj_twitter_search_settings_init() {
     register_setting('tujts', 'tujts_options');
 
     add_settings_section(
       'tujts_section_developers',
-      __('Twitter API Keys', 'tujts'),
+      __('Account Settings', 'tujts'),
       'tujts_section_developers_cb',
       'tujts'
     );
+
+    add_settings_field(
+      'tujts_field_account_name',
+      __('Account Name', 'tujts'),
+      'tujts_field_account_cb',
+      'tujts',
+      'tujts_section_developers',
+      [
+        'label_for' => 'tujts_field_account_name',
+        'class' => 'tujts_row',
+        'tujts_custom_data' => 'custom',
+        'name' => 'Account Name',
+      ]
+    );
+
+    add_settings_field(
+      'tujts_field_account_handle',
+      __('Account Handle', 'tujts'),
+      'tujts_field_account_cb',
+      'tujts',
+      'tujts_section_developers',
+      [
+        'label_for' => 'tujts_field_account_handle',
+        'class' => 'tujts_row',
+        'tujts_custom_data' => 'custom',
+        'name' => 'Account Name',
+      ]
+    );
+
+    add_settings_field(
+      'tujts_field_profile_img',
+      __('Profile Image URL', 'tujts'),
+      'tujts_field_account_cb',
+      'tujts',
+      'tujts_section_developers',
+      [
+        'label_for' => 'tujts_field_profile_img',
+        'class' => 'tujts_row',
+        'tujts_custom_data' => 'custom',
+        'name' => 'Account Name',
+      ]
+    );
+
     add_settings_field(
       'tujts_field_oath_token',
       __('OAuth Access Token', 'tujts'),
@@ -19,7 +62,7 @@
         'label_for' => 'tujts_field_oath_token',
         'class' => 'tujts_row',
         'tujts_custom_data' => 'custom',
-        'name' => 'OAuth Token' 
+        'name' => 'OAuth Token',
       ]
     );
     add_settings_field(
@@ -32,7 +75,7 @@
         'label_for' => 'tujts_field_oath_secret',
         'class' => 'tujts_row',
         'tujts_custom_data' => 'custom',
-        'name' => 'OAuth Token Secret' 
+        'name' => 'OAuth Token Secret', 
       ]
     );
     add_settings_field(
@@ -45,7 +88,7 @@
         'label_for' => 'tujts_field_consumer_key',
         'class' => 'tujts_row',
         'tujts_custom_data' => 'custom',
-        'name' => 'Consumer Key' 
+        'name' => 'Consumer Key', 
       ]
     );
     add_settings_field(
@@ -58,7 +101,7 @@
         'label_for' => 'tujts_field_consumer_secret',
         'class' => 'tujts_row',
         'tujts_custom_data' => 'custom',
-        'name' => 'Consumer Secret'
+        'name' => 'Consumer Secret',
       ]
     );
   }
@@ -67,22 +110,39 @@
 
   function tujts_section_developers_cb($args) {
     ?>
-    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Add Twitter OAUTH and Consumer keys/tokens below.', 'tujts' ); ?></p>
+    <p id="<?php echo esc_attr( $args[ 'id' ] ); ?>"><?php esc_html_e( 'Enter account information below. Twitter OAUTH and Consumer keys/tokens are generated via' ); ?> <a href="<?php echo esc_url('https://apps.twitter.com/'); ?>" target="blank">Twitter Apps</a>.</p>
     <?php
   }
 
-  function tujts_field_cb($args) {
+  function tujts_field_account_cb($args) {
     $options = get_option('tujts_options');
     ?>
     <input id="<?php echo esc_attr( $args['label_for'] ); ?>"
     data-custom="<?php echo esc_attr( $args['tujts_custom_data'] ); ?>"
     name="tujts_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
+    <?php if (isset($options[$args['label_for']])) : ?>
+      value="<?php esc_html_e( $options[$args['label_for']]); ?>"
+    <?php endif; ?>
+    />
+    <?php if (! isset($options[ $args['label_for'] ])) : ?>
+    <p class="description">
+      <?php esc_html_e('Required. Please enter your Twitter ' . $args['name']); ?>
+    </p>
+    <?php endif;
+  }
+
+  function tujts_field_cb($args) {
+    $options = get_option('tujts_options');
+    ?>
+    <input id="<?php echo esc_attr( $args[ 'label_for' ] ); ?>"
+    data-custom="<?php echo esc_attr( $args[ 'tujts_custom_data' ] ); ?>"
+    name="tujts_options[<?php echo esc_attr( $args[ 'label_for' ] ); ?>]"
     />
     <p class="description">
       <?php 
         isset($options[ $args['label_for'] ]) ? 
-          _e($args['name'] . ' is set. To update, re-enter key.') :
-          esc_html_e( 'Enter your Twitter ' . $args['name'], 'tujts' ); 
+          esc_html_e($args['name'] . ' is set. To update, re-enter key.') :
+          esc_html_e( 'Required. Please enter your Twitter ' . $args['name']); 
       ?>
     </p>
     <?php
@@ -113,9 +173,9 @@
       <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
       <form action="options.php" method="post">
         <?php
-        settings_fields( 'tujts' );
-        do_settings_sections( 'tujts' );
-        submit_button( 'Save Settings' );
+          settings_fields( 'tujts' );
+          do_settings_sections( 'tujts' );
+          submit_button( 'Save Settings' );
         ?>
       </form>
     </div>

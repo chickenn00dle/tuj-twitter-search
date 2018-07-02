@@ -1,4 +1,5 @@
 <?php
+defined( 'ABSPATH' ) or die( 'Forbidden Script' );
 // Main query function. creates query array with q, count, result_type, tweet_mode and include_entities params and adds oauth header for validation
 function queryTwitter($search) 
 {
